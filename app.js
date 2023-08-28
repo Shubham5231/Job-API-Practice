@@ -1,5 +1,3 @@
-// Stared from here toady 26 aug 2023
-
 require('dotenv').config();
 require('express-async-errors');
 const express = require('express');
@@ -7,6 +5,7 @@ const app = express();
 
 // ConnectDB
 const ConnectDB = require('./db/connect');
+const AuthenticateUser = require('./middleware/authentication');
 
 // router
 
@@ -23,7 +22,7 @@ app.use(express.json());
 
 // routes
 app.use('/api/v1/auth', authRouter);
-app.use('/api/v1/jobs', jobsRouter);
+app.use('/api/v1/jobs', AuthenticateUser, jobsRouter);
 
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
